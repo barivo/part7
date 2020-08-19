@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const baseUrl = countryName =>
-  `https://restcountries.eu/rest/v2/name/${countryName}?fullText=true`;
-
 const useField = type => {
   const [value, setValue] = useState("");
 
@@ -18,18 +15,23 @@ const useField = type => {
   };
 };
 
+const baseUrl = fullname =>
+  `https://restcountries.eu/rest/v2/name/${fullname}?fullText=true`;
+
 const useCountry = name => {
   const [country, setCountry] = useState(null);
 
   useEffect(() => {
     if (name) {
+      const url = baseUrl(name);
       axios
-        .get(baseUrl(name))
-        .then(res => {
-          const data = res.data[0];
-          setCountry({ data, found: true });
+        .get(url)
+        .then(response => setCountry({ found: true, data: response.data[0] }))
+        .catch(error => {
+          setCountry({ found: false, error });
+          return error;
         })
-        .catch(error => console.log("did not find country", error));
+        .then(error => console.log(error));
     }
   }, [name]);
 
