@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useField } from '../hooks/index.js'
-import blogServices from '../services/blogs'
 import { setNotification } from '../reducers/notificationReducer'
 import { addBlog } from '../actions/creators/blogs'
 

@@ -1,9 +1,12 @@
 const reducer = (state = {}, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case 'LOGIN': {
       const user = action.data
       saveUserToLocalStorage(user)
       return user
+    }
+    case 'LOGGEDIN-USER':
+      return action.user
     case 'LOG-OUT':
       clearLocalStorage()
       return {}
@@ -12,16 +15,12 @@ const reducer = (state = {}, action) => {
   }
 }
 
-const saveUserToLocalStorage = user => {
+const saveUserToLocalStorage = (user) => {
   localStorage.setItem('loggedInUser', JSON.stringify(user))
 }
 
 const clearLocalStorage = () => {
   localStorage.clear()
-}
-
-const getLocalUser = () => {
-  return JSON.parse(localStorage.getItem('loggedInUser'))
 }
 
 export default reducer

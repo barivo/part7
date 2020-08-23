@@ -6,12 +6,13 @@ import Login from './components/Login'
 import CreateBlog from './components/CreateBlog'
 import { initializeBlogs } from './actions/creators/blogs'
 import { setNotification } from './reducers/notificationReducer'
+import { currentlyLoggedIn } from './actions/creators/login'
 
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
+    dispatch(currentlyLoggedIn())
     dispatch(initializeBlogs())
-    dispatch(setNotification('redux gonna redux', 3))
   }, [dispatch])
 
   const blogs = useSelector(({ blogs }) => blogs)
@@ -21,7 +22,7 @@ const App = () => {
       <Login />
       <Notification />
       <h2>blogs</h2>
-      {blogs.map(blog => (
+      {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
       <CreateBlog />
