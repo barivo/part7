@@ -6,4 +6,16 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-export default { getAll }
+const addBlog = (blog, token) => {
+  return axios
+    .post(baseUrl, blog, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(response => response.data)
+    .catch(error => {
+      console.log('failed to create blog: ', error)
+      return null
+    })
+}
+
+export default { getAll, addBlog }
