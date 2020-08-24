@@ -16,7 +16,7 @@ const Login = () => {
   const sendLoginData = (username, password) =>
     dispatch(logIn(username, password))
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     sendLoginData(username.value, password.value)
     usernameRef.current.reset()
@@ -35,7 +35,7 @@ const Login = () => {
     <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        username: mluukkai
+        username: mluukkai , samisami
         <br />
         <input id="username" {...username} />
         <br />

@@ -17,6 +17,7 @@ const Blog = ({ blog }) => {
     const updated = { likes: likes + 1, ...rest }
     const result = await dispatch(updateBlog(updated, currentUser))
     if (result) {
+      dispatch(setNotification('update succeeded!', 3))
     } else {
       dispatch(setNotification('update failed!', 3))
     }

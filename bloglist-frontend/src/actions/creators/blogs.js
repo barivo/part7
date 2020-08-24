@@ -22,7 +22,7 @@ export const addBlog = (title, author, url, user) => {
 
 export const deleteBlog = (id, user) => {
   return async (dispatch) => {
-    const blog = await blogServices.deleteBlog(id, user.token)
+    await blogServices.deleteBlog(id, user.token)
     dispatch({ type: 'DELETE', data: id })
   }
 }
@@ -30,6 +30,11 @@ export const deleteBlog = (id, user) => {
 export const updateBlog = (blog, user) => {
   return async (dispatch) => {
     const updated = await blogServices.updateBlog(blog, user.token)
-    if (updated) dispatch({ type: 'UPDATE', data: updated })
+    if (updated) {
+      dispatch({ type: 'UPDATE', data: updated })
+      return true
+    } else {
+      return false
+    }
   }
 }

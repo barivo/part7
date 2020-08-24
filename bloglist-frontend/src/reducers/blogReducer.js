@@ -1,5 +1,3 @@
-import { setNotification } from './notificationReducer'
-
 const reducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT':
@@ -12,6 +10,11 @@ const reducer = (state = [], action) => {
       const changedBlog = action.data
       const updatedBlogs = state.filter((blogs) => blogs.id !== changedBlog.id)
       return [...updatedBlogs, changedBlog]
+    }
+    case 'DELETE': {
+      const deletedId = action.data
+      const updatedBlogs = state.filter((blogs) => blogs.id !== deletedId)
+      return [...updatedBlogs]
     }
     default:
       return state
