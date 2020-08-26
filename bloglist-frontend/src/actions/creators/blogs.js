@@ -10,20 +10,27 @@ export const initializeBlogs = () => {
   }
 }
 
-export const addBlog = (title, author, url, user) => {
+export const addBlog = (blog, user) => {
   return async (dispatch) => {
-    const newBlog = await blogServices.addBlog(
-      { user: [user.id], title, author, url, likes: 0 },
-      user.token
-    )
-    dispatch({ type: 'ADD', data: newBlog })
+    const newBlog = await blogServices.addBlog(blog, user.token)
+    if (newBlog) {
+      dispatch({ type: 'ADD', data: newBlog })
+      dispatch({ type: 'ALERT', data: { msg: 'created new blog!' } })
+    } else {
+      dispatch({ type: 'ALERT', data: 'failed to create blog' })
+    }
   }
 }
 
 export const deleteBlog = (id, user) => {
   return async (dispatch) => {
-    await blogServices.deleteBlog(id, user.token)
-    dispatch({ type: 'DELETE', data: id })
+    const responseStatus = await blogServices.deleteBlog(id, user.token)
+    if (responseStatus === 204) {
+      dispatch({ type: 'DELETE', data: id })
+      dispatch({ type: 'ALERT', data: { msg: 'deleted blog!' } })
+    } else {
+      dispatch({ type: 'ALERT', data: { msg: 'failed to delete blog!' } })
+    }
   }
 }
 
@@ -32,9 +39,9 @@ export const updateBlog = (blog, user) => {
     const updated = await blogServices.updateBlog(blog, user.token)
     if (updated) {
       dispatch({ type: 'UPDATE', data: updated })
-      return true
+      dispatch({ type: 'ALERT', data: { msg: 'updated blog!' } })
     } else {
-      return false
+      dispatch({ type: 'ALERT', data: { msg: 'failed to update blog!' } })
     }
   }
 }

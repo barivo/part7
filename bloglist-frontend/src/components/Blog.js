@@ -2,7 +2,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteBlog, updateBlog } from '../actions/creators/blogs'
-import { setNotification } from '../reducers/notificationReducer'
 
 const Blog = ({ blog }) => {
   const currentUser = useSelector(({ user }) => user)
@@ -14,13 +13,8 @@ const Blog = ({ blog }) => {
 
   const handleLike = async () => {
     const { likes, ...rest } = blog
-    const updated = { likes: likes + 1, ...rest }
-    const result = await dispatch(updateBlog(updated, currentUser))
-    if (result) {
-      dispatch(setNotification('update succeeded!', 3))
-    } else {
-      dispatch(setNotification('update failed!', 3))
-    }
+    const updated = { ...rest, likes: likes + 1 }
+    dispatch(updateBlog(updated, currentUser))
   }
 
   return (

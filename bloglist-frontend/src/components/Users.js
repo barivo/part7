@@ -1,34 +1,45 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getAll } from '../reducers/usersReducer'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Switch, Link, Route } from 'react-router-dom'
+
+import User from './User'
 
 const Users = () => {
-  const dispatch = useDispatch()
   const users = useSelector(({ users }) => users)
+  const blogs = useSelector(({ blogs }) => blogs)
+  const numBlogsCreated = (id) => blogs.filter((b) => b.user[0] === id).length
 
-  useEffect(() => {
-    dispatch(getAll())
-  }, [dispatch])
+  const showTable = (users) => (
+    <table>
+      <thead>
+        <tr>
+          <th>full name</th>
+          <th>blogs created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {users.map((user) => (
+          <tr key={user.id}>
+            <td>
+              <Link to={`/users/${user.id}`}>{user.name}</Link>{' '}
+            </td>
+            <td>{numBlogsCreated(user.id)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
 
   return (
     <div>
+      <Switch>
+        <Route path="/users/:id">
+          <User />
+        </Route>
+        <Route path="/"></Route>
+      </Switch>
       <h3>Users</h3>
-      <table>
-        <thead>
-          <tr>
-            <th colSpan="1">full name</th>
-            <th colSpan="1">blogs created</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.name}</td>
-              <td>{user.blogs.length}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {showTable(users)}
     </div>
   )
 }

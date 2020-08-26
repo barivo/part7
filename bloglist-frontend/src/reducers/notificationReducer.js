@@ -1,12 +1,14 @@
-const initialState = { type: '', data: '' }
+const initialState = { msg: '', seconds: 3, alertType: 'INFO' }
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'VOTE':
-      return { type: action.type, data: action.data }
     case 'RESET':
       return initialState
     case 'ALERT':
-      return { type: action.type, data: action.data }
+      return {
+        msg: action.data.msg,
+        seconds: action.data.seconds ? action.data.seconds : 3,
+        alertType: action.data.alertType ? action.data.alertType : 'INFO',
+      }
     default:
       return state
   }
@@ -15,28 +17,15 @@ const reducer = (state = initialState, action) => {
 
 let timer
 
-export const setNotification = (msg, seconds, type = 'ALERT') => {
-  return async dispatch => {
+export const setNotification = (msg, seconds, alertType = 'INFORMATION') => {
+  return async (dispatch) => {
     if (timer) clearTimeout(timer)
-    timer = await setTimeout(() => dispatch(resetNotification), seconds * 1000)
-    if (type === 'VOTE') {
-      dispatch(votedOn(msg))
-    } else {
-      dispatch(sendAlert({ type: 'ALERT', data: msg }))
-    }
+    timer = await setTimeout(() => {
+      dispatch({ type: 'RESET' })
+    }, seconds * 1000)
+
+    dispatch({ type: 'ALERT', data: { msg, seconds, alertType } })
   }
 }
-
-export const votedOn = data => ({
-  type: 'VOTE',
-  data,
-})
-
-export const resetNotification = { type: 'RESET' }
-
-export const sendAlert = data => ({
-  type: 'ALERT',
-  data,
-})
 
 export default reducer

@@ -9,12 +9,11 @@ const getAll = () => {
 const addBlog = (blog, token) => {
   return axios
     .post(baseUrl, blog, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `bearer ${token}` },
     })
     .then((response) => response.data)
     .catch((error) => {
       console.log('failed to create blog: ', error)
-      return null
     })
 }
 
@@ -23,21 +22,28 @@ const deleteBlog = (blogId, token) => {
     .delete(`${baseUrl}/${blogId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then((response) => response.data)
+    .then((response) => response.status)
     .catch((error) => {
       console.log('failed to delete blog: ', error)
     })
 }
 
 const updateBlog = (blog, token) => {
+  const updated = {
+    title: blog.title,
+    author: blog.author,
+    url: blog.url,
+    likes: blog.likes,
+  }
   return axios
-    .put(`${baseUrl}/${blog.id}`, blog, {
+    .put(`${baseUrl}/${blog.id}`, updated, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then((response) => response.data)
+    .then((response) => {
+      return response.data
+    })
     .catch((error) => {
       console.log('failed to update blog: ', error)
-      return null
     })
 }
 

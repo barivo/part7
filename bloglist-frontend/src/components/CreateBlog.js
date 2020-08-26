@@ -16,10 +16,19 @@ const CreateBlog = () => {
   const author = useField('text', aref)
   const url = useField('text', uref)
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     if (currentUser.username) {
-      dispatch(addBlog(title.value, author.value, url.value, currentUser))
+      dispatch(
+        addBlog(
+          {
+            title: title.value,
+            author: author.value,
+            url: url.value,
+          },
+          currentUser
+        )
+      )
     } else {
       dispatch(setNotification('you must be logged in to create a new blog', 3))
     }

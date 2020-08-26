@@ -1,37 +1,30 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import Menu from './components/Menu'
 import Users from './components/Users'
-import Blog from './components/Blog'
+import BlogList from './components/BlogList'
 import Notification from './components/Notifications'
 import Login from './components/Login'
 import CreateBlog from './components/CreateBlog'
 
 import { initializeBlogs } from './actions/creators/blogs'
 import { currentlyLoggedIn } from './actions/creators/login'
+import { getAll } from './reducers/usersReducer'
 
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(initializeBlogs())
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(currentlyLoggedIn())
+    dispatch(getAll())
   }, [dispatch])
-
-  const blogs = useSelector(({ blogs }) => blogs)
 
   return (
     <div>
       <Login />
       <Notification />
       <Users />
-      <h2>blogs</h2>
-      {blogs
-        .sort((a, b) => b.likes - a.likes)
-        .map((blog) => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
+      <BlogList />
       <CreateBlog />
     </div>
   )

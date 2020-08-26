@@ -1,5 +1,7 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { setNotification } from '../reducers/notificationReducer'
+
 const style = {
   border: 'solid',
   padding: 10,
@@ -7,10 +9,14 @@ const style = {
 }
 
 const Notification = () => {
-  const notifications = useSelector(({ notifications }) => notifications.data)
-  const data = notifications.data
+  const dispatch = useDispatch()
+  const alert = useSelector(({ notifications }) => notifications)
 
-  return data ? <div style={style}>{data}</div> : <div></div>
+  useEffect(() => {
+    if (alert.msg) dispatch(setNotification(alert.msg, 5))
+  }, [dispatch, alert.msg])
+
+  return alert.msg ? <div style={style}>{alert.msg}</div> : <div></div>
 }
 
 export default Notification
