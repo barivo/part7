@@ -22,7 +22,7 @@ const Blog = ({ blog }) => {
   return (
     <div>
       <h2>{blog.title}</h2>
-      <a href={blog.url} target="_blank">
+      <a href={blog.url} target="_blank" rel="noopener noreferrer">
         {blog.url}
       </a>
       <br />

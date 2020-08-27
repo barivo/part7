@@ -13,7 +13,6 @@ const BlogList = () => {
 
   const blogList = (blogs) => (
     <div>
-      <h2>blogs</h2>
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
@@ -31,6 +30,7 @@ const BlogList = () => {
           <Blog blog={blog} />
         </Route>
         <Route path="/blogs">{blogList(blogs)}</Route>
+        <Route path="/">{blogList(blogs)}</Route>
       </Switch>
     </div>
   )

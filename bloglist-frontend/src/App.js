@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Menu from './components/Menu'
-import Users from './components/Users'
-import BlogList from './components/BlogList'
 import Notification from './components/Notifications'
-import Login from './components/Login'
-import CreateBlog from './components/CreateBlog'
 
 import { initializeBlogs } from './actions/creators/blogs'
 import { currentlyLoggedIn } from './actions/creators/login'
@@ -21,11 +17,8 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
-      <Login />
+      <Menu />
       <Notification />
-      <BlogList />
-      <CreateBlog />
     </div>
   )
 }
