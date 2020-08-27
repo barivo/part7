@@ -21,9 +21,9 @@ const App = () => {
 
   return (
     <div>
+      <h2>blogs</h2>
       <Login />
       <Notification />
-      <Users />
       <BlogList />
       <CreateBlog />
     </div>

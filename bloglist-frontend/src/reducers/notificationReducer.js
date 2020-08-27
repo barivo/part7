@@ -19,12 +19,13 @@ let timer
 
 export const setNotification = (msg, seconds, alertType = 'INFORMATION') => {
   return async (dispatch) => {
+    dispatch({ type: 'ALERT', data: { msg, seconds, alertType } })
+
     if (timer) clearTimeout(timer)
-    timer = await setTimeout(() => {
+
+    timer = setTimeout(() => {
       dispatch({ type: 'RESET' })
     }, seconds * 1000)
-
-    dispatch({ type: 'ALERT', data: { msg, seconds, alertType } })
   }
 }
 
