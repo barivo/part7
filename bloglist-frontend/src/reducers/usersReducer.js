@@ -23,8 +23,8 @@ export const getAll = () => {
   }
 }
 
-const getAllfromApi = () => {
-  return Axios.get(baseUrl)
+const getAllfromApi = async () => {
+  return await Axios.get(baseUrl)
     .then((response) => response.data)
     .catch((error) => {
       console.log('failed to get list of users from api', error)

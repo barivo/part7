@@ -17,7 +17,7 @@ const reducer = (state = initialState, action) => {
 
 let timer
 
-export const setNotification = (msg, seconds, alertType = 'INFORMATION') => {
+export const setNotification = (msg, seconds, alertType = 'INFO') => {
   return async (dispatch) => {
     dispatch({ type: 'ALERT', data: { msg, seconds, alertType } })
 

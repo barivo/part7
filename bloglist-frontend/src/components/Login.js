@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useField } from '../hooks/index.js'
 import { logIn, logOut } from '../actions/creators/login'
+import { TextField, Button } from '@material-ui/core'
 
 const Login = () => {
   const currentUser = useSelector(({ user }) => user)
@@ -33,20 +34,20 @@ const Login = () => {
     </div>
   ) : (
     <div>
-      <h2>Login</h2>
+      <h2>login</h2>
       <form onSubmit={handleSubmit}>
-        username: mluukkai , samisami
-        <br />
-        <input id="username" {...username} />
-        <br />
-        password
-        <br />
-        <input id="password" {...password} />
-        <br />
-        <button>login</button>
-        <br />
+        <div>
+          <TextField {...username} label="username" />
+        </div>
+        <div>
+          <TextField {...password} label="password" type="password" />
+        </div>
+        <div>
+          <Button variant="contained" color="primary" type="submit">
+            login
+          </Button>
+        </div>
       </form>
-      <br />
     </div>
   )
 }
